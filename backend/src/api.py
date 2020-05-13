@@ -20,7 +20,7 @@ CORS(app)
 
 ## ROUTES
 '''
-@TODO implement endpoint
+@TODO DONE implement endpoint
     GET /drinks
         it should be a public endpoint
         it should contain only the drink.short() data representation
@@ -42,7 +42,7 @@ def get_drinks():
         abort(422)
 
 '''
-@TODO implement endpoint
+@TODO DONE implement endpoint
     GET /drinks-detail
         it should require the 'get:drinks-detail' permission
         it should contain the drink.long() data representation
@@ -50,7 +50,8 @@ def get_drinks():
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks-detail', methods=['GET'])
-def get_drinks_detail():
+@requires_auth('get:drinks-detail')
+def get_drinks_detail(payload):
     try:
         data = Drink.query.order_by(Drink.id).all()
         drinks = [drink.long() for drink in data]
@@ -66,7 +67,7 @@ def get_drinks_detail():
 
 
 '''
-@TODO implement endpoint
+@TODO DONE implement endpoint
     POST /drinks
         it should create a new row in the drinks table
         it should require the 'post:drinks' permission
@@ -75,9 +76,9 @@ def get_drinks_detail():
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks', methods=['POST'])
-def create_drinks():
+@requires_auth('post:drinks')
+def create_drinks(payload):
     body = request.get_json()
-    print(body)
 
     if body is None:
         abort(422)
@@ -98,7 +99,6 @@ def create_drinks():
                 })
 
             else:
-                print('else')
                 abort(422)
         except Exception as e:
             print(e)
@@ -117,7 +117,8 @@ def create_drinks():
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks/<int:drink_id>', methods=['PATCH'])
-def update_drink(drink_id):
+@requires_auth('patch:drinks')
+def update_drink(payload, drink_id):
 
     try:
         drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
@@ -148,7 +149,7 @@ def update_drink(drink_id):
 
 
 '''
-@TODO implement endpoint
+@TODO DONE implement endpoint
     DELETE /drinks/<id>
         where <id> is the existing model id
         it should respond with a 404 error if <id> is not found
@@ -158,7 +159,8 @@ def update_drink(drink_id):
         or appropriate status code indicating reason for failure
 '''
 @app.route('/drinks/<int:drink_id>', methods=['DELETE'])
-def delete_drink(drink_id):
+@requires_auth('delete:drinks')
+def delete_drink(payload, drink_id):
 
     try:
         drink = Drink.query.filter(Drink.id == drink_id).one_or_none()

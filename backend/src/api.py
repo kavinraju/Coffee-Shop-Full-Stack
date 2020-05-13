@@ -36,8 +36,7 @@ def get_drinks():
             'drinks': drinks
         })
 
-    except Exception as e:
-        print(e)
+    except:
         abort(422)
 
 '''
@@ -59,8 +58,7 @@ def get_drinks_detail(payload):
             'drinks': drinks
         })
 
-    except Exception as e:
-        print(e)
+    except:
         abort(422)
 
 
@@ -89,7 +87,6 @@ def create_drinks(payload):
                 new_drink = Drink(title=new_drink_title, recipe=json.dumps(new_drink_recipe))
                 new_drink.insert()
 
-                print('new_drink: ', new_drink.long)
                 return jsonify({
                     'success': True,
                     'drinks': [new_drink.long()]
@@ -97,8 +94,7 @@ def create_drinks(payload):
 
             else:
                 abort(422)
-        except Exception as e:
-            print(e)
+        except:
             abort(422)
 
 
@@ -118,7 +114,7 @@ def update_drink(payload, drink_id):
 
     try:
         drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
-        print(drink.long())
+
         if drink is None:
             abort(404)
 
@@ -139,8 +135,7 @@ def update_drink(payload, drink_id):
                 'drinks': [drink.long()]
             })
 
-    except Exception as e:
-        print(e)
+    except:
         abort(422)
 
 
@@ -170,8 +165,7 @@ def delete_drink(payload, drink_id):
                 'delete': drink_id
             })
 
-    except Exception as e:
-        print(e)
+    except:
         abort(422)
 
 

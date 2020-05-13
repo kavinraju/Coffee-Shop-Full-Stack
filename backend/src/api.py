@@ -12,7 +12,7 @@ setup_db(app)
 CORS(app)
 
 '''
-@TODO uncomment the following line to initialize the datbase
+@TODO DONE uncomment the following line to initialize the datbase
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
@@ -106,7 +106,7 @@ def create_drinks(payload):
 
 
 '''
-@TODO implement endpoint
+@TODO DONE implement endpoint
     PATCH /drinks/<id>
         where <id> is the existing model id
         it should respond with a 404 error if <id> is not found
@@ -219,9 +219,9 @@ def resource_not_found(error):
     error handler should conform to general task above 
 '''
 @app.errorhandler(AuthError)
-def resource_not_found(error):
+def autherror(error):
     return jsonify({
                     "success": False,
                     "error": error.status_code,
                     "message": error.error
-                    })
+                    }) , error.status_code

@@ -86,8 +86,8 @@ def check_permissions(permission, payload):
     if permission not in payload['permissions']:
         raise AuthError({
             'code': 'permissions_not_granted',
-            'description': 'Unauthorized to the action.'
-        }, 403)
+            'description': 'Unauthorized action.'
+        }, 401)
     
     return True
 
@@ -152,11 +152,11 @@ def verify_decode_jwt(token):
             raise AuthError({
                 'code': 'invalid_header',
                 'description': 'Unable to parse authentication token.'
-            }, 400)
+            }, 401)
     raise AuthError({
                 'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
-            }, 400)
+            }, 401)
 
 '''
 @TODO implement @requires_auth(permission) decorator method

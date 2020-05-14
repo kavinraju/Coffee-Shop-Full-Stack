@@ -3,11 +3,11 @@ from flask import request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+from ..environments.environment import *
 
-
-AUTH0_DOMAIN = 'our-cafe.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'drinks'
+AUTH0_DOMAIN = AUTH0_DOMAIN_ENV
+ALGORITHMS = ALGORITHMS_ENV
+API_AUDIENCE = API_AUDIENCE_ENV
 
 ## AuthError Exception
 '''
